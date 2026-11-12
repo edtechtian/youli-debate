@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#245c48">
+  <meta name="description" content="为中文课堂准备的轻量辩论工具。设置辩题、队伍和环节时长，一键开始大屏计时。免登录，本地保存。">
+  <title>有理 · 中文辩论计时</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23245c48'/%3E%3Ctext x='32' y='45' font-size='43' font-family='serif' text-anchor='middle' fill='white'%3E辩%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./participants.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5m4-5v5"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 3h12l4 4v14H3V3h2Zm2 0v6h10V3M7 21v-8h10v8"/></symbol>
+    <symbol id="i-screen" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 17v4m-4 0h8"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 3 8M3 4v7h7"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5V4Zm4 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8l-5-5Zm0 0v5h5M8 13h8m-8 4h5"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 14 6-6 6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 10 6 6 6-6"/></symbol>
+    <symbol id="i-dice" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01" stroke-width="3"/></symbol>
+  </defs></svg>
+  <header class="topbar"><div class="topbar-inner">
+    <a class="brand" href="#" aria-label="有理，中文辩论计时首页"><span class="brand-mark">辩</span><span>有理<span class="brand-divider"></span><span class="brand-description">中文辩论计时</span></span></a>
+    <div class="topbar-right"><span class="local-badge"><i></i>无需登录 · 本地使用</span><button type="button" class="help-button" id="help-button">使用指南 <span>↗</span></button></div>
+  </div></header>
+  <main id="setup-view" class="page-wrap">
+    <section class="hero">
+      <div><div class="eyebrow"><span></span> 让每一种观点，都被认真听见</div><h1>一场好辩论，<br class="mobile-break">从这里开始<span class="title-dot">。</span></h1><p>设置辩题，安排时间。把舞台留给学生，把计时交给有理。</p></div>
+      <div class="hero-art" aria-hidden="true"><div class="art-orbit"></div><div class="speech speech-pro">言之有理<span>“</span></div><div class="speech speech-con">辩而有度<span>”</span></div><span class="art-star">✳</span><span class="art-note">THINK. SPEAK. CONNECT.</span></div>
+    </section>
+    <div class="workspace">
+      <form id="debate-form" class="setup-column">
+        <section class="card topic-card" aria-labelledby="topic-heading">
+          <div class="section-title"><span class="step-number">01</span><h2 id="topic-heading">今天，辩什么？</h2><span class="section-hint">辩题与对阵</span></div>
+          <label for="event-name" class="field-label">活动名称 <span class="optional">选填</span></label><input id="event-name" name="eventName" maxlength="60" placeholder="例如：APIS 中文课堂辩论赛" autocomplete="off">
+          <div class="topic-label-row"><label for="topic" class="field-label">辩论题目 <span class="required">*</span></label><div><button type="button" id="undo-topic" class="undo-topic" hidden>撤销换题</button><button type="button" id="random-topic" class="random-topic-button" title="从课堂题库随机换一道辩题，可撤销"><svg class="icon"><use href="#i-dice"/></svg>随机辩题</button></div></div><textarea id="topic" name="topic" rows="2" maxlength="180" required placeholder="输入一个值得讨论的问题……"></textarea>
+          <div class="topic-suggestions"><span>找点灵感</span><button type="button" data-topic="学生是否应该在学校使用手机？">校园手机</button><button type="button" data-topic="人工智能对学习的帮助是否大于影响？">人工智能</button><button type="button" data-topic="旅行中，计划比随性更重要吗？">旅行方式</button></div>
+          <div class="team-fields">
+            <div class="team-field pro-field"><div class="team-label"><span class="side-dot pro-dot"></span><h3>正方</h3><span>支持这一观点</span></div><label class="sr-only" for="pro-name">正方队伍名称</label><input id="pro-name" name="proName" maxlength="32" placeholder="正方队伍名称（选填）"><label class="sr-only" for="pro-stance">正方观点</label><input id="pro-stance" name="proStance" maxlength="120" placeholder="正方观点（选填）"><div class="debater-roster"><div class="debater-count-row"><label for="pro-count">辩友人数</label><select id="pro-count" aria-label="正方辩友人数"></select></div><div id="pro-debaters" class="debater-inputs"></div></div></div>
+            <div class="team-field con-field"><div class="team-label"><span class="side-dot con-dot"></span><h3>反方</h3><span>提出另一种看法</span></div><label class="sr-only" for="con-name">反方队伍名称</label><input id="con-name" name="conName" maxlength="32" placeholder="反方队伍名称（选填）"><label class="sr-only" for="con-stance">反方观点</label><input id="con-stance" name="conStance" maxlength="120" placeholder="反方观点（选填）"><div class="debater-roster"><div class="debater-count-row"><label for="con-count">辩友人数</label><select id="con-count" aria-label="反方辩友人数"></select></div><div id="con-debaters" class="debater-inputs"></div></div></div>
+          </div><p class="field-note roster-note">双方可分别设置 1–6 位辩友，姓名选填；可在下方为每个环节指定发言辩友。</p>
+        </section>
+        <section class="card rounds-card" aria-labelledby="rounds-heading">
+          <div class="section-title"><span class="step-number">02</span><h2 id="rounds-heading">给思考，留一点时间</h2><span class="section-hint">环节与时长</span></div>
+          <div class="preset-tabs" role="group" aria-label="赛制模板"><button type="button" data-preset="short"><strong>轻量练习</strong><span>10 分钟</span></button><button type="button" data-preset="classroom"><strong>课堂标准</strong><span>20 分钟</span></button><button type="button" data-preset="full"><strong>完整辩论</strong><span>30 分钟</span></button></div>
+          <div class="rounds-table-heading"><span>环节名称</span><span>发言方 / 辩友</span><span>时长（分 : 秒）</span><span></span></div><div id="rounds-editor"></div>
+          <div class="rounds-bottom"><button class="text-button" type="button" id="add-round"><svg class="icon"><use href="#i-plus"/></svg>添加环节</button><span><svg class="icon"><use href="#i-clock"/></svg>预计 <strong id="inline-total">20</strong> 分钟</span></div>
+          <p class="field-note">自由辩论选择「双方」，正反方分别计时，点击队伍即可切换。</p>
+        </section>
+        <section class="card options-card" aria-labelledby="options-heading"><div class="section-title"><span class="step-number">03</span><h2 id="options-heading">最后，一点小设置</h2></div><div class="option-row"><div><label for="sound-enabled">提示音</label><p>剩余 30 秒与时间结束时提醒</p></div><label class="switch"><input id="sound-enabled" type="checkbox"><span></span></label></div><div class="option-row"><div><label for="auto-next">自动进入下一环节</label><p>时间结束后切换，等待主持人开始计时</p></div><label class="switch"><input id="auto-next" type="checkbox"><span></span></label></div></section>
+      </form>
+      <aside class="preview-column"><div class="preview-sticky"><section class="preview-card"><div class="preview-label"><span class="live-dot"></span> 赛场预览 <span>LIVE PREVIEW</span></div><div class="preview-event" id="preview-event">中文课堂辩论</div><h2 id="preview-topic">一个问题，两种思考。</h2><div class="preview-match"><span><i class="side-dot pro-dot"></i><strong id="preview-pro">正方</strong></span><span class="versus">VS</span><span><i class="side-dot con-dot"></i><strong id="preview-con">反方</strong></span></div><div class="preview-rule"></div><div class="preview-metrics"><div><strong id="preview-rounds">7</strong><span>辩论环节</span></div><div><strong id="preview-total">20<small>分钟</small></strong><span>预计总时长</span></div></div><div class="preview-flow" id="preview-flow"></div><button type="submit" form="debate-form" class="primary-button" id="start-debate">准备好了，进入赛场<svg class="icon"><use href="#i-arrow"/></svg></button><p class="preview-footnote">进入后由主持人点击开始，不会立即计时</p></section><div class="save-status" id="save-status"><svg class="icon"><use href="#i-check"/></svg><span>设置自动保存在此浏览器</span></div><div class="file-actions"><button type="button" id="export-config"><svg class="icon"><use href="#i-save"/></svg>导出设置</button><span></span><button type="button" id="import-config"><svg class="icon"><use href="#i-file"/></svg>导入设置</button><input type="file" id="config-file" accept="application/json,.json" hidden></div><div class="quiet-note"><svg class="icon"><use href="#i-screen"/></svg><p>教室大屏，已经准备好。<span>进入赛场后，开启全屏即可投影。</span></p></div></div></aside>
+    </div>
+    <footer class="page-footer"><span>有理 · 让表达有底气</span><span>专注课堂，无广告，无需订阅</span></footer>
+  </main>
+  <main id="arena-view" hidden>
+    <div class="arena-toolbar"><button type="button" id="back-to-setup" class="quiet-button"><svg class="icon"><use href="#i-back"/></svg>返回设置</button><span id="arena-event"></span><div><button type="button" id="arena-sound" class="quiet-button" aria-pressed="true"><svg class="icon"><use href="#i-sound"/></svg><span>提示音开</span></button><button type="button" id="fullscreen" class="quiet-button"><svg class="icon"><use href="#i-screen"/></svg><span>全屏投影</span></button></div></div>
+    <section class="arena-heading"><div class="eyebrow">中文辩论 · 每一种观点都值得听见</div><h1 id="arena-topic"></h1></section>
+    <div class="arena-layout"><section class="timer-stage"><div class="current-round"><span id="arena-progress">01 / 07</span><h2 id="current-round-name"></h2><span id="round-status" role="status">准备就绪</span></div><div class="team-timers"><button type="button" class="team-timer pro-timer" id="pro-timer"><span class="timer-side-label">正方<span class="active-indicator">当前发言</span></span><strong class="arena-team-name" id="arena-pro-name"></strong><span class="stance" id="arena-pro-stance"></span><span class="timer-digits" id="pro-time">03:00</span><span class="timer-hint" id="pro-timer-hint">等待开始</span></button><div class="arena-vs">VS</div><button type="button" class="team-timer con-timer" id="con-timer"><span class="timer-side-label">反方<span class="active-indicator">当前发言</span></span><strong class="arena-team-name" id="arena-con-name"></strong><span class="stance" id="arena-con-stance"></span><span class="timer-digits" id="con-time">— —</span><span class="timer-hint" id="con-timer-hint">本环节未发言</span></button></div><div class="time-progress"><div id="time-progress-fill"></div></div><div class="arena-controls"><button type="button" id="previous-round" class="secondary-button">上一环节</button><button type="button" id="reset-round" class="icon-button" aria-label="重置本环节" title="重置本环节"><svg class="icon"><use href="#i-reset"/></svg></button><button type="button" class="primary-button timer-play" id="toggle-timer"><svg class="icon"><use href="#i-play"/></svg><span>开始计时</span></button><button type="button" id="next-round" class="secondary-button">下一环节<svg class="icon"><use href="#i-arrow"/></svg></button></div><p class="keyboard-hints"><kbd>空格</kbd> 开始 / 暂停 <span>·</span><kbd>←</kbd><kbd>→</kbd> 切换环节 <span>·</span><kbd>A</kbd><kbd>D</kbd> 自由辩论换方 <span>·</span><kbd>F</kbd> 全屏</p><p class="arena-notice" id="arena-notice" role="status"></p></section><aside class="agenda-card"><div class="agenda-heading"><h2>比赛进程</h2><span id="agenda-total"></span></div><div id="arena-agenda"></div><p>保持尊重，用观点与证据说话。</p></aside></div>
+    <footer class="arena-footer">有理 · 让表达有底气<span>本场计时仅在当前页面运行</span></footer>
+  </main>
+  <dialog id="help-dialog"><div class="dialog-heading"><h2>三步，开始一场辩论</h2><button type="button" class="icon-button" data-close-dialog aria-label="关闭使用指南">×</button></div><ol class="help-steps"><li><strong>设定辩题与队伍</strong><p>可手动输入或随机抽取辩题；分别设置双方队名、观点和 1–6 位辩友，并选填各辩位姓名。</p></li><li><strong>安排环节和时间</strong><p>选择 10、20 或 30 分钟模板，再按需要调整。选择「双方」时，每方拥有独立时长，预计总时长计入两份。</p></li><li><strong>进入赛场，开始表达</strong><p>主持人点击开始计时。自由辩论中点击队伍卡片或按 A / D 换方；切换时不会重置剩余时间。时间到会暂停，不会出现负数。</p></li></ol><p class="dialog-note">设置保存在当前浏览器，建议导出备份。此工具适合在一台电脑上操作并投影，不提供异地多人同步。关闭或刷新页面会重置当前计时。</p><button type="button" class="primary-button" data-close-dialog>明白了，开始设置<svg class="icon"><use href="#i-arrow"/></svg></button></dialog>
+  <dialog id="confirm-dialog"><h2 id="confirm-title"></h2><p id="confirm-message"></p><div class="confirm-actions"><button type="button" id="confirm-cancel" class="secondary-button">取消</button><button type="button" id="confirm-ok" class="primary-button">确认</button></div></dialog>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript>请启用浏览器的 JavaScript 后使用辩论设置与计时功能。</noscript>
+</body>
+</html>

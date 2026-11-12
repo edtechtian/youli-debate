@@ -1,0 +1,59 @@
+.topic-label-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 18px 0 8px; }
+.topic-label-row .field-label { margin: 0; }
+.topic-label-row > div { display: flex; align-items: center; gap: 10px; }
+.random-topic-button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #c7d7bf; border-radius: 7px; background: #edf4e8; color: #507443; padding: 6px 10px; font-size: 11px; }
+.random-topic-button:hover { background: #e1ecd9; border-color: #9eb58f; }
+.random-topic-button .icon { width: 16px; height: 16px; }
+.undo-topic { border: 0; background: none; color: #8b9b7c; font-size: 10px; padding: 6px 0; }
+.undo-topic:hover { color: var(--green); }
+.debater-roster { border-top: 1px solid #dce6d7; margin-top: 15px; padding-top: 12px; }
+.con-field .debater-roster { border-color: #eadfd2; }
+.debater-count-row { display: flex; align-items: center; justify-content: space-between; gap: 9px; margin-bottom: 11px; }
+.debater-count-row label { font-size: 11px; color: #72866a; }
+.con-field .debater-count-row label { color: #a08774; }
+.debater-count-row select { border: 1px solid #dbe4d4; border-radius: 6px; background: #ffffffbb; color: #5b7850; padding: 4px 8px; font-size: 11px; min-height: 30px; width: 72px; }
+.con-field .debater-count-row select { border-color: #e9ddcf; color: #a17d62; }
+.debater-inputs { display: flex; flex-direction: column; gap: 7px; }
+.debater-input-row { display: grid; grid-template-columns: 53px minmax(0,1fr); align-items: center; gap: 8px; }
+.debater-input-row label { font-size: 10px; color: #76886e; white-space: nowrap; }
+.con-field .debater-input-row label { color: #a18d7b; }
+.team-field .debater-input-row input { margin: 0; height: 33px; }
+.roster-note { margin-top: 13px; }
+.preview-card .preview-match { margin-bottom: 10px; }
+.preview-people { text-align: center; color: #a3af98; font-size: 10px; margin-bottom: 23px; }
+.rounds-table-heading, .round-row { grid-template-columns: minmax(90px,1fr) 106px 105px 58px; }
+.round-side-controls { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.round-speaker-picks { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.round-row .speaker-select { height: 27px; font-size: 9px; border-style: dashed; padding-left: 6px; padding-right: 18px; }
+.round-row .round-side-controls > select { height: 29px; }
+.arena-speaker { display: block; max-width: 100%; overflow-wrap: anywhere; border-radius: 5px; background: #e8f0e2; color: #6d8b59; padding: 2px 8px; font-size: 11px; margin: 3px 0 7px; }
+.con-timer .arena-speaker { background: #f4e9dd; color: #ac8564; }
+.agenda-item small { overflow-wrap: anywhere; }
+@media (max-width: 1050px) { .rounds-table-heading, .round-row { grid-template-columns: minmax(75px,1fr) 96px 96px 50px; } }
+@media (max-width: 800px) { .rounds-table-heading, .round-row { grid-template-columns: minmax(70px,1fr) 88px 83px 19px; } .debater-input-row { grid-template-columns: 45px minmax(0,1fr); gap: 5px; } .debater-input-row label { font-size: 9px; } }
+@media (max-width: 650px) {
+  .rounds-table-heading { display: none; }
+  .round-row { grid-template-columns: minmax(0,1fr) 94px 52px; grid-template-areas: "name name actions" "speaker duration duration"; gap: 9px 10px; padding: 14px 0; }
+  .round-row .round-name-wrap { grid-area: name; }
+  .round-row .round-name-wrap input { font-size: 13px; }
+  .round-row .row-actions { grid-area: actions; justify-self: end; }
+  .round-row .row-actions button:not([data-action=delete]) { display: grid; }
+  .round-side-controls { grid-area: speaker; flex-direction: row; gap: 5px; align-items: flex-start; }
+  .round-row .round-side-controls > select { width: 58px; flex: 0 0 58px; font-size: 10px; padding-left: 7px; }
+  .round-speaker-picks { flex: 1; }
+  .round-row .speaker-select { height: 29px; padding-left: 5px; }
+  .round-row .duration-input { grid-area: duration; justify-self: end; align-self: center; }
+  .duration-input input { width: 39px; }
+  .debater-input-row { grid-template-columns: 53px minmax(0,1fr); gap: 8px; }
+  .debater-input-row label { font-size: 10px; }
+  .arena-speaker { font-size: 9px; }
+}
+@media (max-width: 430px) {
+  .team-fields { grid-template-columns: 1fr; gap: 14px; }
+  .team-field { padding: 15px; }
+  .team-label > span:last-child { display: block; }
+  .team-field .debater-input-row input { font-size: 12px; height: 35px; }
+  .topic-label-row { gap: 6px; }
+  .topic-label-row > div { gap: 7px; }
+  .random-topic-button { font-size: 10px; padding: 6px 8px; }
+}
